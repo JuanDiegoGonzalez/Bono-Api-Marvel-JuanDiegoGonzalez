@@ -1,5 +1,5 @@
 import "./App.css";
-import { Personaje } from "./components/personajes.js";
+import { Personaje } from "./components/Personaje.js";
 import {
   BrowserRouter as Router,
   Switch,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./Personaje.css";
 const CryptoJS = require("crypto-js");
 
 export const Personaje = () => {
@@ -9,7 +10,7 @@ export const Personaje = () => {
       if (localStorage.getItem("personajes") === null) {
         setPersonajes("Loading...");
       } else {
-        setPersonajes(localStorage.getItem("personajes"));
+        setPersonajes(JSON.parse(localStorage.getItem("personajes")));
       }
     } else {
       const ts = new Date();
@@ -23,7 +24,7 @@ export const Personaje = () => {
         .then((resp) => resp.json())
         .then((data) => {
           setPersonajes(data.data.results);
-          localStorage.setItem("personajes", data.data.results);
+          localStorage.setItem("personajes", JSON.stringify(data.data.results));
         });
     }
   }, []);
@@ -31,9 +32,17 @@ export const Personaje = () => {
   return (
     <>
       <h1>Personajes</h1>
-      {personajes.map((act) => (
-        <p key={act.id}>{act.name}</p>
-      ))}
+      <div className="container">
+        {personajes.map((act) => (
+          <div className="card" key={act.id}>
+            <h3>{act.name}</h3>
+            <h5>ID: {act.id}</h5>
+            <p>
+              {act.description !== "" ? act.description : "No description."}
+            </p>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
